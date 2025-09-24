@@ -7,6 +7,8 @@ type userData = {
   following: number;
   bio: string;
 };
+
+
 export const Searchbar = () => {
   const [username, setUsername] = useState("");
   const [userData, setUserData] = useState<userData | null>(null);
@@ -15,15 +17,15 @@ export const Searchbar = () => {
 
   const onSearch = async () => {
     if (!username) return;
-
+  
     try {
       setError(null);
       setUserData(null);
       setRepos([]);
-      console.log(process.env.NEXT_PUBLIC_GH_TOKEN);
+      console.log(TOKEN)
       const userRes = await fetch(`https://api.github.com/users/${username}`, {
         headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_GH_TOKEN}`,
+          Authorization: `Bearer ${TOKEN}`,
           Accept: "application/vnd.github+json",
         },
       });
@@ -40,7 +42,7 @@ export const Searchbar = () => {
         `https://api.github.com/users/${username}/repos?per_page=10&page=1`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_GH_TOKEN}`,
+            Authorization: `Bearer ${TOKEN}`,
             Accept: "application/vnd.github+json",
           },
         }
